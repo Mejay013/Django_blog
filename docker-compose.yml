@@ -1,7 +1,14 @@
 version: "3.9"
 
 services:
-
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=django_blog
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=some_pass
+    volumes:
+      - pgdata:/var/lib/postgresql
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -9,8 +16,10 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+    depends_on: 
+      - db
     environment:
-      - PGHOST=host.docker.internal
+      - PGHOST=db
       - PGDATABASE=django_blog
       - PGUSER=test_user
       - PGPASSWORD=some_pass
