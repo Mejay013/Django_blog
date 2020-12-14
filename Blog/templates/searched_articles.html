@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}SimpleBlog{% endblock %}
+{% block content %}
+{% if append_list %}
+<h2>Найденные статьи:</h2>
+{% for article in append_list %}
+<div class="col-md-4 ">
+        <div class="card mb-4 shadow-sm">
+          <img src='{{ article.article_image.url }}' width="100%" height="225"/>
+          <div class="card-body">
+            <p class="card-text">{{ article.article_title }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a href="{% url 'detail' article.id %} "><button type="button" class="btn btn-sm btn-outline-secondary">Читать</button></a>
+              </div>
+              <small class="text-muted">{{article.date_publish }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endfor %}
+{% elif append_people_list %}
+{% for people in append_people_list %}
+ <a href="{% url 'profile' people.id %}"><h3>{{people.first_name}}</h3></a> 
+{% endfor %}
+{% else %}
+<h2>Ни одной статьи или пользователя не найдено,попробуйте снова</h2>
+<form action="{% url 'search' %}" method="POST">
+        {% csrf_token %}
+          <input type="text" class="form" placeholder="Поиск" name="search" >
+        </form>
+{% endif %}
+{% endblock %}

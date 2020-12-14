@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3 bg-dark " style="border-color: black; " >
+        <div class="column">
+            <a href="{% url 'featured_article' user2.id %}">Избранные статьи</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        {% block profile_character %}
+            <div class="row">
+    <div class="col-md-5 bg-dark " style="border-color: black; " >
+            <div class="avatar">
+                <div class="image">
+                    <img src="{{profile.profile_avatar.url}}" width="350px" height="350px">
+                </div>
+            </div>
+            {% if user == user2 %}
+            <div class="settings">
+                <div class="modelsettings">
+                    <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Редактировать</button>
+                    <!-------------------------------------------------------------------------------------------------------------------->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Редактировать</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                             <form method='POST' action=""  enctype="multipart/form-data">{% csrf_token %}
+                            <div class="modal-body">
+                                        {{ form.profile_avatar }}
+                                        <hr>
+                                        <p> Изменить статус {{ form.status}}</p>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <input type="submit" class="btn btn-primary" value='Изменить' />
+                            </div>
+                           </div>
+                        </form> 
+                        </div>
+                    </div>
+                    <!-------------------------------------------------------------------------------------------------------------------->
+                </div>
+            </div>
+        </div>
+
+        {%endif%}
+    </div>
+    <div class="col-md-7 bg-dark"style="border-color: black; " >
+        <div class="name">
+        <h3>{{ user2.first_name }}</h3>
+        </div>
+        <div class="usercharacters">
+            <div class="media-body">
+                    <h4 class="mt-0">Статус:</h5>
+                    {{profile.status}}
+            </div>
+        </div>
+    </div>
+    </div>
+    {% endblock %}
+    </div>
+</div>
+
+{% endblock %}

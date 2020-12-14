@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block title %}{{article_title}} {% endblock %}
+
+{%block content %} 
+<div class="container">
+  <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 font-italic">{{article.article_title}}</h1>
+        <p class="lead mb-0 text-white font-weight-bold">{{article.date_publish}}</p>
+        {% if check %}
+        <p><a href="{% url 'add_article_list' article.id %}">Добавить в избранное</a></p>
+        {% else %}
+        <p>Статья в избранном</p>
+        {% endif %}
+    </div>
+  </div> 
+  <div class="container">
+    {{article.article_text}}
+  <br>
+  <img src="{{ article.article_image.url }}" width="700px" height="500px" style="align-items: center; "></a>
+</div>
+{% if last_comments %}
+  {% for i in last_comments %}
+  <hr>
+  <div class="media">
+    
+      <a href="{% url 'profile' i.author_id %}"><img src="{{i.comment_author_image.url}}" width="70px" height="70px" class="mr-3" ></a>
+      <div class="media-body">
+        <h5 class="mt-0">{{i.comment_title}}</h5>
+        {{i.comment_text}} 
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <hr>
+  <h2>Нет ни одного комментария.Будь первым!</h2>
+{% endif %}
+{% if user.is_authenticated %}
+<hr>
+  <form method="post" action="{% url 'add_comment' article.id user.first_name %}" >
+    {% csrf_token %}
+    <input type="text" name="text" >
+    <input type="submit" value="Отправить">
+  </form>
+{% else %}
+<hr>
+  <p>Для того,что бы оставить комментарии,необходимо<a class="nav-item nav-link " href="{% url 'login' %}">Войти</a></p>
+{% endif %}    
+
+</div>
+{% endblock %}

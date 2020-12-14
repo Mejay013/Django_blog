@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block lib%} 
+<link href="{% static 'sign_in.css' %}" rel="stylesheet">
+{% endblock %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+
+{% if error_msg %}
+<div class="alert alert-danger" role="alert">
+    {{error_msg}}
+</div>
+{%endif%}
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form action=" " method="POST" class="form-signin">
+    {% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal">Введите данные</h1>
+            <input name="username" class="form-control"  placeholder="Придумайте Login" required>
+            <input name="nickname" class="form-control"  placeholder="Придумайте никнейм" required>
+            <input name="password" type="password" class="form-control" placeholder="Придумайте пароль" required>
+            <input name="password1"  type="password" class="form-control"  placeholder="Повторите пароль" required >
+            <button type="submit" class="btn btn-lg btn-primary ">Зарегистрироваться</button>
+        </form>
+    </div>
+    <div class="col-md-6 " style="margin-top: 15px;">
+        <ul>
+            <li>Логин должен содержать больше 5 символов без пробелов</li>
+            <li>Логин может содержать символ "_"</li>
+            <li>Логин не содержит пробелов</li>
+            <li>Пароль должен быть длиннее 6 символов без пробелов</li>
+            <li>Никнейм отображается другим пользователям в комментариях и профиле</li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}
