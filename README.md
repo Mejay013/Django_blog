@@ -15,7 +15,7 @@
 
 ```1. git clone https://github.com/Mejay013/Django_blog.git ``` 
 
-```2. cd avito_test``` 
+```2. cd Django_blog``` 
 
 ```2. docker-compose build``` 
 
@@ -24,7 +24,7 @@
 ## Функционал
 
 
-1. Go to  ```localhost:8000```
+1. Перейти  ```localhost:8000```
 
 На гланой странице можно увидеть различные статьи блога и краткую информацию. 
 
